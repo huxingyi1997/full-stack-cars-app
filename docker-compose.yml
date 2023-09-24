@@ -7,7 +7,7 @@ services:
       - MYSQL_ROOT_PASSWORD=pass123
       - MYSQL_DATABASE=yourcar
     ports:
-      - 3306:3306
+      - 3307:3306
     command: --default-authentication-plugin=mysql_native_password
     networks:
       - shared-network
@@ -25,6 +25,8 @@ services:
       - 80:80
     command: /bin/sh -c "nginx -g 'daemon off;'"
     depends_on:
+      api-prod:
+        condition: service_healthy
       app-prod:
         condition: service_started
     networks:
@@ -37,7 +39,7 @@ services:
       context: nestjs-cars-app
       target: production
       dockerfile: Dockerfile
-    command: sh -c './bin/wait-for -t 0 mysqldb:3306 -- yarn start:prod'
+    command: sh -c 'yarn start:prod'
     depends_on:
       - mysqldb
     networks:

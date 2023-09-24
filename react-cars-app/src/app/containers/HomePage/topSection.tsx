@@ -63,8 +63,6 @@ const Description = styled.p`
     lg:text-sm
     xl:text-lg
     sm:max-h-full
-    overflow-hidden
-    max-h-12
     text-gray-800
   `};
 `;
